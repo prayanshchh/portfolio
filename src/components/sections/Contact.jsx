@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { RevealOnScroll } from "../RevealOnScroll";
 import emailjs from "emailjs-com";
+import { Toaster, toast } from "react-hot-toast";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -19,11 +20,25 @@ export const Contact = () => {
         e.target,
         import.meta.env.VITE_PUBLIC_KEY
       )
-      .then((result) => {
-        alert("Message Sent!");
+      .then(() => {
+        toast.success("Message sent successfully!", {
+          style: {
+            background: "#0f172a", // dark background
+            color: "#38bdf8", // blue text
+            border: "1px solid #38bdf8",
+          },
+        });
         setFormData({ name: "", email: "", message: "" });
       })
-      .catch(() => alert("Oops! Something went wrong. Please try again."));
+      .catch(() => {
+        toast.error("Oops! Something went wrong.", {
+          style: {
+            background: "#0f172a",
+            color: "#f87171", // red text
+            border: "1px solid #f87171",
+          },
+        });
+      });
   };
 
   return (
@@ -32,9 +47,9 @@ export const Contact = () => {
       className="min-h-screen flex items-center justify-center py-20"
     >
       <RevealOnScroll>
+        <Toaster position="bottom-center" />
         <div className="px-4 w-full min-w-[300px] md:w-[500px] sm:w-2/3 p-6">
           <h2 className="text-3xl font-bold mb-8 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent text-center">
-            {" "}
             Get In Touch
           </h2>
           <form className="space-y-6" onSubmit={handleSubmit}>
@@ -85,7 +100,7 @@ export const Contact = () => {
 
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-3 px-6 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+              className="w-full bg-blue-500 text-white py-3 px-6 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] cursor-pointer"
             >
               Send Message
             </button>
